@@ -1,11 +1,15 @@
 //Front-end Style Guide
 //The designs were created to the following widths:
 // Layout
+
+
 export const mobileWidth = "375px";
 export const desktopWidth = "1440px";
 
 // Colors
 export const primaryBlue = "hsl(246, 80%, 60%)";
+export const primaryWhite = "hsl(0, 0%, 100%)";
+export const primaryGray = "hsl(0, 0%, 80%)";
 
 export const lightRedWork = "hsl(15, 100%, 70%)";
 export const softBluePlay = "hsl(195, 74%, 62%)";
@@ -28,6 +32,6 @@ export const bodyCopyFontSize = "18px";
 export const fontFamily = "Rubik, sans-serif";
 
 // Font Weights
-export const fontWeightLight = 300;
-export const fontWeightRegular = 400;
-export const fontWeightMedium = 500;
+export const fontWeightSmall = 300;
+export const fontWeightMedium = 400;
+export const fontWeightLarge = 500;
