@@ -1,10 +1,12 @@
-import { Box,  SxProps, Typography } from '@mui/material'
+import { Box,  IconButton,  SxProps, Typography } from '@mui/material'
 import React from 'react'
-import { TimeTraking } from '../../interfaces/TimeTraking.interface'
-import { darkBlue, fontFamily, fontWeightLarge, primaryWhite } from '../../styles/variables';
+import { TimeTraking, metricTime } from '../../interfaces/TimeTraking.interface'
+import { darkBlue, fontFamily, primaryWhite} from '../../styles/variables';
 import iconEllipsis from '../../assets/images/icon-ellipsis.svg'
+
 export interface Props {
-  timeTraking: TimeTraking;  
+  timeTracking: TimeTraking;  
+  metricTime: metricTime;
 }
 
 export interface styledCard {
@@ -12,6 +14,7 @@ export interface styledCard {
   frontTimeInformation : SxProps;
   iconStyle: SxProps;
   TitleBox: SxProps;
+  timeViewData: SxProps;
 }
   
   const TimeTRakingCardStyle: styledCard = {
@@ -37,6 +40,7 @@ export interface styledCard {
         height:'70%',
         zIndex:10,
         borderRadius:'10px',
+        
         '@media screen and (max-width: 870px)':{
            
         },
@@ -54,29 +58,62 @@ export interface styledCard {
         paddingTop:'1.5rem',
         color:primaryWhite,
         justifyContent:'space-between',
-        border:'1px solid red',
         marginLeft:'1rem',
         marginRight:'1rem',
         fontFamily:fontFamily,
         fontWeight:'500'
+      },
+      timeViewData:{
+        color:primaryWhite,
+        paddingLeft:'1.5rem',
+        marginBottom:'1.5rem'
       }
     }
 
-const TimeTrakingCard:React.FC<Props> = ({timeTraking}) => {
+  
+
+const TimeTrakingCard:React.FC<Props> = ({timeTracking, metricTime}) => {
+  let numericValueCurrent = 0;
+  let numericValuePrevius = 0;
+  let stringValuePrevius = '';
+
+  if (metricTime === 'daily' && timeTracking.timeframes.daily) {
+    numericValueCurrent = timeTracking.timeframes.daily.current;
+    numericValuePrevius = timeTracking.timeframes.daily.previous;
+    stringValuePrevius = 'Day';
+
+  } else if (metricTime === 'weekly' && timeTracking.timeframes.weekly) {
+    numericValueCurrent = timeTracking.timeframes.weekly.current;
+    numericValuePrevius = timeTracking.timeframes.weekly.previous;
+    stringValuePrevius = 'Week';
+
+  } else if (metricTime === 'monthly' && timeTracking.timeframes.monthly) {
+    numericValueCurrent = timeTracking.timeframes.monthly.current;
+    numericValuePrevius = timeTracking.timeframes.monthly.previous;
+    stringValuePrevius = 'Month';
+  }
+ 
+ 
   return (
-    <Box  sx={{...TimeTRakingCardStyle.containerStyle,  backgroundColor:timeTraking.color}} >
+    <Box  sx={{...TimeTRakingCardStyle.containerStyle,  backgroundColor:timeTracking.color}} >
       <Box sx={TimeTRakingCardStyle.iconStyle} >
-        <img src={timeTraking.icon} alt={timeTraking.title} />
+        <img src={timeTracking.icon} alt={timeTracking.title} />
       </Box>
         
       
       <Box sx={TimeTRakingCardStyle.frontTimeInformation} >
           <Box sx={TimeTRakingCardStyle.TitleBox}>
-            <Typography  color={'inherit'}>{timeTraking.title}</Typography>
-            <Box >
+            <Typography  color={'inherit'}>{timeTracking.title}</Typography>
+            <IconButton >
               <img src={iconEllipsis} alt="" />
-            </Box>
+            </IconButton>
           </Box>
+          
+          <Box sx={TimeTRakingCardStyle.timeViewData}>
+            <Typography variant='h3' color={'inherit'}>{numericValueCurrent}hrs</Typography>
+            <Typography variant='subtitle1' color={'inherit'}>Last {stringValuePrevius} - {numericValuePrevius}hrs</Typography>
+          </Box>
+          
       </Box>
     </Box>
   )

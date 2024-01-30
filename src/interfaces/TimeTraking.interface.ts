@@ -1,4 +1,6 @@
 
+export type metricTime = 'daily' | 'weekly' | 'monthly';
+
 export interface TimeTraking {
     title: string
     icon: string

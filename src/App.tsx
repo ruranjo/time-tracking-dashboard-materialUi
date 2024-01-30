@@ -5,6 +5,7 @@ import avatarIcon from './assets/images/image-jeremy.png';
 import dataUser from './utils/data.json'
 import { darkBlue, desaturatedBlue, fontFamily, fontWeightSmall, primaryBlue, primaryGray, primaryWhite } from './styles/variables';
 import { TimeTrakingCard } from './components';
+import { metricTime } from './interfaces/TimeTraking.interface';
 
 
 export interface styledCard {
@@ -29,7 +30,6 @@ const appStyle: styledCard = {
       alignContent:'center',
       width:'100%',
       height:'100vh',
-      border:'1px solid red',
       '@media screen and (max-width: 870px)': {
         height:'auto',
       },
@@ -40,7 +40,6 @@ const appStyle: styledCard = {
       justifyContent:'space-between',
       width:'80%',
       
-      border:'1px solid yellow',
       '@media screen and (max-width: 440px)': {
         flexDirection:'column'
       },
@@ -62,6 +61,9 @@ const appStyle: styledCard = {
       },
       '@media screen and (max-width: 440px)': {
         width:'100%',
+        marginTop:'1.5rem',
+        marginBottom:'1.5rem',
+        minWidth:'260px',
       },
       
     },
@@ -72,7 +74,6 @@ const appStyle: styledCard = {
       flexWrap:'wrap',
       width:'78%',
       gap: '1.5rem',
-      border:'1px solid purple',
       '@media screen and (max-width: 440px)': {
         width:'100%',
       },
@@ -166,7 +167,7 @@ const appStyle: styledCard = {
 
 
 const App:React.FC<{}> = () => {
-  const [timeShowSwetch, setTimeShowSwetch] = useState('daily'); 
+  const [timeShowSwetch, setTimeShowSwetch] = useState<metricTime>('daily'); 
   return (
     <Container maxWidth={false}  sx={appStyle.containerStyle}>
       <Box sx={appStyle.boxStyle}>
@@ -190,11 +191,11 @@ const App:React.FC<{}> = () => {
         <Box sx={appStyle.timeFramers}>
           
         {
-          dataUser.map((timeTrakingSingle, index)=>{
+          dataUser.map((timeTrackingSingle, index)=>{
             
             return(
               <> 
-                <TimeTrakingCard timeTraking={timeTrakingSingle} key={index}/>
+                <TimeTrakingCard timeTracking={timeTrackingSingle} metricTime={timeShowSwetch} key={index}/>
               </>
             );
           })
